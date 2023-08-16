@@ -1,0 +1,125 @@
+<html>
+
+<head>
+  <title>長崎県 3次元点群データ（3DTiles）</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+  <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet">
+  <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script>
+  <script src="https://unpkg.com/@loaders.gl/3d-tiles@^2.3.0/dist/dist.min.js"></script>
+  <script type="module" src="maplibre-gl-gsi-terrain-fast-png.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <script type="text/javascript">
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: 'std.json',
+      hash: true,
+      zoom: 16,
+      center: [129.8671061, 32.7526307],
+      pitch: 60,
+      bearing: 0,
+      attributionControl: false,
+    })
+
+    // ズーム・回転
+    map.addControl(new maplibregl.NavigationControl());
+
+    // フルスクリーンモードのオンオフ
+    map.addControl(new maplibregl.FullscreenControl());
+
+    // 現在位置表示
+    map.addControl(new maplibregl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: false
+      },
+      fitBoundsOptions: { maxZoom: 18 },
+      trackUserLocation: true,
+      showUserLocation: true
+    }));
+
+    // スケール表示
+    map.addControl(new maplibregl.ScaleControl({
+      maxWidth: 200,
+      unit: 'metric'
+    }));
+
+    // Attributionを折りたたみ表示
+    map.addControl(new maplibregl.AttributionControl({
+      compact: true,
+      customAttribution: '（<a href="https://twitter.com/syanseto" target="_blank">Twitter</a> | <a href="https://github.com/shi-works/GSI-Provisional-Inundation-Depth-Map" target="_blank">Github</a>） '
+    }));
+
+    map.on('load', () => {
+      /*
+      // MapboxOverlayを使ったオーバーレイ
+      // 3次元点群データ
+      const overlay = new deck.MapboxOverlay({
+        interleaved: false,
+        layers: [
+          new deck.Tile3DLayer({
+            id: "tile3dlayer",
+            pointSize: 2,
+            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/01KE9821/tileset.json', // 長崎県 3次元点群データ
+            loader: Tiles3DLoader,
+            beforeId: 'hillshade-tiles'
+          })
+        ]
+      });
+
+      map.addControl(overlay);
+      */
+
+      // MapboxOverlayを使ったインターリーブ
+      // 3次元点群データ
+      const overlay = new deck.MapboxOverlay({
+        interleaved: true,
+        layers: [
+          new deck.Tile3DLayer({
+            id: "tile3dlayer",
+            pointSize: 2,
+            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/01KE9821/tileset.json', // 長崎県 3次元点群データ
+            loader: Tiles3DLoader,
+            beforeId: 'hillshade-tiles'
+          })
+        ]
+      });
+
+      map.addControl(overlay);
+
+      /*
+      // MapboxLayerを使ったインターリーブ
+      // 3次元点群データ
+      const { MapboxLayer, Tile3DLayer } = deck;
+
+      const tile3dLayer = new MapboxLayer({
+        id: "tile3dlayer",
+        type: Tile3DLayer,
+        pointSize: 2,
+        data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/01KE9821/tileset.json', // 長崎県 3次元点群データ
+        loader: Tiles3DLoader
+      });
+
+      map.addLayer(tile3dLayer);
+      */
+    })
+  </script>
+</body>
+
+</html>
