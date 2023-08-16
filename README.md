@@ -29,7 +29,8 @@ pdal info -p 0 01ke9821_swaped.las
 # py3dtilesで点群データを3DTilesに変換
 py3dtiles convert --srs_in 6669 --srs_out 4978 --out 01KE9821 01ke9821_swaped.las
 ```
-```json:xy_switch_pipeline.json
+- xy_switch_pipeline.json
+```
 [
   {
     "type": "readers.las",
