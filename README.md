@@ -32,30 +32,6 @@ pdal info -p 0 sasebo_swaped.las
 # py3dtilesで点群データを3DTilesに変換
 py3dtiles convert --srs_in 6669 --srs_out 4978 --out sasebo las/sasebo_swaped.las
 ```
-xy_switch_pipeline.json
-```
-[
-  {
-    "type": "readers.las",
-    "filename": "01ke9821_translated.las",
-    "spatialreference": "EPSG:6669"
-  },
-  {
-    "type": "filters.reprojection",
-    "in_srs": "EPSG:6669",
-    "out_srs": "EPSG:6669",
-    "in_axis_ordering": "2, 1"
-  },
-  {
-    "type": "writers.las",
-    "filename": "01ke9821_swaped.las",
-    "forward": "header,scale,vlr",
-    "offset_x": "auto",
-    "offset_y": "auto",
-    "offset_z": "auto"
-  }
-]
-```
 merge-pipeline.json
 ```
 {
@@ -70,4 +46,28 @@ merge-pipeline.json
     }
   ]
 }
+```
+xy_switch_pipeline.json
+```
+[
+  {
+    "type": "readers.las",
+    "filename": "sasebo_translated.las",
+    "spatialreference": "EPSG:6669"
+  },
+  {
+    "type": "filters.reprojection",
+    "in_srs": "EPSG:6669",
+    "out_srs": "EPSG:6669",
+    "in_axis_ordering": "2, 1"
+  },
+  {
+    "type": "writers.las",
+    "filename": "sasebo_swaped.las",
+    "forward": "header,scale,vlr",
+    "offset_x": "auto",
+    "offset_y": "auto",
+    "offset_z": "auto"
+  }
+]
 ```
