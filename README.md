@@ -10,6 +10,9 @@ https://shi-works.github.io/nagasaki-point-cloud-map-on-maplibre-gl-js/
 # メタデータの確認
 pdal info --metadata 01ke9821_org.las
 
+# PDALとJSONを利用して複数ファイルをマージ
+pdal pipeline merge-pipeline.json
+
 # 座標参照系の付与
 pdal translate -i 01ke9821_org.las -o 01ke9821_translated.las --writers.las.a_srs="EPSG:6669"
 
@@ -52,4 +55,19 @@ xy_switch_pipeline.json
     "offset_z": "auto"
   }
 ]
+```
+merge-pipeline.json
+```
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "zip/*.las"
+    },
+    {
+      "type": "writers.las",
+      "filename": "las/sasebo.las"
+    }
+  ]
+}
 ```
