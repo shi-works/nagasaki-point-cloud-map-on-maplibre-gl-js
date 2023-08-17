@@ -7,30 +7,30 @@ https://shi-works.github.io/nagasaki-point-cloud-map-on-maplibre-gl-js/
 - py3dtiles 6.0.0
 ```
 # OSGeo4Wを起動
-# メタデータの確認
-pdal info --metadata 01ke9821_org.las
-
 # PDALとJSONを利用して複数ファイルをマージ
 pdal pipeline merge-pipeline.json
 
+# メタデータの確認
+pdal info --metadata sasebo.las
+
 # 座標参照系の付与
-pdal translate -i 01ke9821_org.las -o 01ke9821_translated.las --writers.las.a_srs="EPSG:6669"
+pdal translate -i sasebo.las -o sasebo_translated.las --writers.las.a_srs="EPSG:6669"
 
 # メタデータの確認
-pdal info --metadata 01ke9821_translated.las
+pdal info --metadata sasebo_translated.las
 
 # データの先頭に格納されているポイントの位置を確認
-pdal info -p 0 01ke9821_translated.las
+pdal info -p 0 sasebo_translated.las
 
 # PDALとJSONを利用して軸を入れ替え
-pdal pipeline xy_switch_pipeline.json
+pdal pipeline xy_switch_pipeline_sasebo.json
 
 # データの先頭に格納されているポイントの位置を確認
-pdal info -p 0 01ke9821_swaped.las
+pdal info -p 0 sasebo_swaped.las
 
 # WSLを起動（Windows環境では下記のコマンドはエラーになるため）
 # py3dtilesで点群データを3DTilesに変換
-py3dtiles convert --srs_in 6669 --srs_out 4978 --out 01KE9821 01ke9821_swaped.las
+py3dtiles convert --srs_in 6669 --srs_out 4978 --out sasebo las/sasebo_swaped.las
 ```
 xy_switch_pipeline.json
 ```
