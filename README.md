@@ -23,7 +23,7 @@ pdal info --metadata sasebo_translated.las
 pdal info -p 0 sasebo_translated.las
 
 # PDALとJSONを利用して軸を入れ替え
-pdal pipeline xy_switch_pipeline_sasebo.json
+pdal pipeline xy_switch_pipeline.json
 
 # データの先頭に格納されているポイントの位置を確認
 pdal info -p 0 sasebo_swaped.las
