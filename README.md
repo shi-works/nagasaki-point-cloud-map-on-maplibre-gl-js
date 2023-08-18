@@ -71,3 +71,10 @@ xy_switch_pipeline.json
   }
 ]
 ```
+# 3DTiles
+## 長崎駅
+https://xs489works.xsrv.jp/3dtiles/open_nagasaki/nagasaki_station/tileset.json
+## 佐世保駅
+https://xs489works.xsrv.jp/3dtiles/open_nagasaki/sasebo_station/tileset.json
+## ハウステンボス
+https://xs489works.xsrv.jp/3dtiles/open_nagasaki/huistenbosch/tileset.json
