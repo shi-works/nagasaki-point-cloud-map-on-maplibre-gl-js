@@ -11,26 +11,26 @@ https://shi-works.github.io/nagasaki-point-cloud-map-on-maplibre-gl-js/
 pdal pipeline merge-pipeline.json
 
 # メタデータの確認
-pdal info --metadata sasebo.las
+pdal info --metadata sasebo_station.las
 
 # 座標参照系の付与
-pdal translate -i sasebo.las -o sasebo_translated.las --writers.las.a_srs="EPSG:6669"
+pdal translate -i sasebo_station.las -o sasebo_station_translated.las --writers.las.a_srs="EPSG:6669"
 
 # メタデータの確認
-pdal info --metadata sasebo_translated.las
+pdal info --metadata sasebo_station_translated.las
 
 # データの先頭に格納されているポイントの位置を確認
-pdal info -p 0 sasebo_translated.las
+pdal info -p 0 sasebo_station_translated.las
 
 # PDALとJSONを利用して軸を入れ替え
 pdal pipeline xy_switch_pipeline.json
 
 # データの先頭に格納されているポイントの位置を確認
-pdal info -p 0 sasebo_swaped.las
+pdal info -p 0 sasebo_station_swaped.las
 
 # WSLを起動（Windows環境では下記のコマンドはエラーになるため）
 # py3dtilesで点群データを3DTilesに変換
-py3dtiles convert --srs_in 6669 --srs_out 4978 --out sasebo las/sasebo_swaped.las
+py3dtiles convert --srs_in 6669 --srs_out 4978 --out sasebo_station las/sasebo_station_swaped.las
 ```
 merge-pipeline.json
 ```
@@ -38,11 +38,11 @@ merge-pipeline.json
   "pipeline": [
     {
       "type": "readers.las",
-      "filename": "zip/*.las"
+      "filename": "sasebo_station/*.las"
     },
     {
       "type": "writers.las",
-      "filename": "las/sasebo.las"
+      "filename": "sasebo_station.las"
     }
   ]
 }
@@ -52,7 +52,7 @@ xy_switch_pipeline.json
 [
   {
     "type": "readers.las",
-    "filename": "sasebo_translated.las",
+    "filename": "sasebo_station_translated.las",
     "spatialreference": "EPSG:6669"
   },
   {
@@ -63,7 +63,7 @@ xy_switch_pipeline.json
   },
   {
     "type": "writers.las",
-    "filename": "sasebo_swaped.las",
+    "filename": "sasebo_station_swaped.las",
     "forward": "header,scale,vlr",
     "offset_x": "auto",
     "offset_y": "auto",
