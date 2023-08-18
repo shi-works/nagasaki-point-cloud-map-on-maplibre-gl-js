@@ -2,7 +2,7 @@
 ## Public Website
 https://shi-works.github.io/nagasaki-point-cloud-map-on-maplibre-gl-js/
 
-## 3D Tilesの生成方法
+## 3DTilesの生成方法
 - pdal 2.5.2
 - py3dtiles 6.0.0
 ```
@@ -71,10 +71,10 @@ xy_switch_pipeline.json
   }
 ]
 ```
-# 3DTiles(zip形式)
-## 長崎駅
+## 3DTiles(zip形式)
+### 長崎駅
 `https://xs489works.xsrv.jp/3dtiles/open_nagasaki/nagasaki_station.zip`,223MB
-## 佐世保駅
+### 佐世保駅
 `https://xs489works.xsrv.jp/3dtiles/open_nagasaki/sasebo_station.zip`,482MB
-## ハウステンボス
+### ハウステンボス
 `https://xs489works.xsrv.jp/3dtiles/open_nagasaki/huistenbosch.zip`,498MB
