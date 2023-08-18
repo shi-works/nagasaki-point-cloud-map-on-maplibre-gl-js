@@ -30,8 +30,8 @@
       container: 'map',
       style: 'std.json',
       hash: true,
-      zoom: 16.52,
-      center: [129.725782, 33.162951],
+      zoom: 16.65,
+      center: [129.790141, 33.085061],
       pitch: 60,
       bearing: 0,
       attributionControl: false,
@@ -92,8 +92,10 @@
           new deck.Tile3DLayer({
             id: "tile3dlayer",
             pointSize: 2,
-            // data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/01KE9821/tileset.json', // 長崎県 3次元点群データ
-            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/sasebo/tileset.json', // 長崎県 3次元点群データ
+            // 長崎県 3次元点群データ
+            // data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/nagasaki_station/tileset.json',    // 長崎駅
+            // data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/sasebo_station/tileset.json',      // 佐世保駅
+            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/huistenbosch/tileset.json',      // ハウステンボス
             loader: Tiles3DLoader
           })
         ]
