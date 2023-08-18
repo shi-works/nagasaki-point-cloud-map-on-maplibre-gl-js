@@ -2,7 +2,7 @@
 ## Public Website
 https://shi-works.github.io/nagasaki-point-cloud-map-on-maplibre-gl-js/
 
-## 3DTilesの生成方法
+## 3D Tilesの生成方法
 - pdal 2.5.2
 - py3dtiles 6.0.0
 ```
@@ -71,7 +71,7 @@ xy_switch_pipeline.json
   }
 ]
 ```
-# 3DTiles
+# 3D Tiles(tileset.json)
 ## 長崎駅
 https://xs489works.xsrv.jp/3dtiles/open_nagasaki/nagasaki_station/tileset.json
 ## 佐世保駅
