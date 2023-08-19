@@ -20,11 +20,55 @@
       bottom: 0;
       width: 100%;
     }
+
+    .map-overlay {
+      font: bold 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      position: absolute;
+      width: 220px;
+      bottom: 20px;
+      left: 0;
+      padding: 10px;
+    }
+
+    .map-overlay .map-overlay-inner {
+      background-color: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .map-overlay label {
+      display: block;
+      margin: 0 0 0px;
+      font-size: 12px;
+      top: 100px;
+      left: 10px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .map-overlay input {
+      background-color: transparent;
+      display: inline-block;
+      width: 100%;
+      position: relative;
+      margin: 0;
+      cursor: ew-resize;
+    }
   </style>
 </head>
 
 <body>
   <div id="map"></div>
+  <div class="map-overlay top">
+    <div class="map-overlay-inner">
+      <label>不透明度: <span id="slider-opacity-value">100%</span></label>
+      <input id="slider-opacity" type="range" min="0" max="100" step="1" value="100">
+      <label>ポイントサイズ: <span id="slider-pointSize-value">2</span></label>
+      <input id="slider-pointSize" type="range" min="1" max="10" step="0.1" value="2">
+    </div>
+  </div>
   <script type="text/javascript">
     const map = new maplibregl.Map({
       container: 'map',
@@ -66,70 +110,73 @@
     }));
 
     map.on('load', () => {
-      /*
-      // MapboxOverlayを使ったオーバーレイ
-      // 3次元点群データ
-      const overlay = new deck.MapboxOverlay({
-        interleaved: false,
-        layers: [
-          new deck.Tile3DLayer({
-            id: "tile3dlayer",
-            pointSize: 2,
-            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/01KE9821/tileset.json', // 長崎県 3次元点群データ
-            loader: Tiles3DLoader
-          })
-        ]
-      });
-
-      map.addControl(overlay);
-      */
-
       // MapboxOverlayを使ったインターリーブ
       // 3次元点群データ
+      let layers = [
+        new deck.Tile3DLayer({
+          id: "tile3dlayer-1",
+          pointSize: 2,
+          // 長崎県 3次元点群データ
+          data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/nagasaki_station/tileset.json',    // 長崎駅
+          loader: Tiles3DLoader
+        }),
+        new deck.Tile3DLayer({
+          id: "tile3dlayer-2",
+          pointSize: 2,
+          // 長崎県 3次元点群データ
+          data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/sasebo_station/tileset.json',      // 佐世保駅
+          loader: Tiles3DLoader
+        }),
+        new deck.Tile3DLayer({
+          id: "tile3dlayer-3",
+          pointSize: 2,
+          // 長崎県 3次元点群データ
+          data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/huistenbosch/tileset.json',      // ハウステンボス
+          loader: Tiles3DLoader
+        })
+      ];
+
       const overlay = new deck.MapboxOverlay({
         interleaved: true,
-        layers: [
-          new deck.Tile3DLayer({
-            id: "tile3dlayer-1",
-            pointSize: 2,
-            // 長崎県 3次元点群データ
-            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/nagasaki_station/tileset.json',    // 長崎駅
-            loader: Tiles3DLoader
-          }),
-          new deck.Tile3DLayer({
-            id: "tile3dlayer-2",
-            pointSize: 2,
-            // 長崎県 3次元点群データ
-            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/sasebo_station/tileset.json',      // 佐世保駅
-            loader: Tiles3DLoader
-          }),
-          new deck.Tile3DLayer({
-            id: "tile3dlayer-3",
-            pointSize: 2,
-            // 長崎県 3次元点群データ
-            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/huistenbosch/tileset.json',      // ハウステンボス
-            loader: Tiles3DLoader
-          })
-        ]
+        layers: layers
       });
 
       map.addControl(overlay);
 
-      /*
-      // MapboxLayerを使ったインターリーブ
-      // 3次元点群データ
-      const { MapboxLayer, Tile3DLayer } = deck;
+      // スライダーで3次元点群データの不透明度を制御
+      const sliderOpactiy = document.getElementById('slider-opacity');
+      const sliderOpactiyValue = document.getElementById('slider-opacity-value');
 
-      const tile3dLayer = new MapboxLayer({
-        id: "tile3dlayer",
-        type: Tile3DLayer,
-        pointSize: 2,
-        data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/01KE9821/tileset.json', // 長崎県 3次元点群データ
-        loader: Tiles3DLoader
+      // スライダーの値が変わったときに不透明度を変更する関数
+      sliderOpactiy.addEventListener('input', function (e) {
+        const opacity = parseInt(e.target.value, 10) / 100;
+        layers = layers.map(layer => {
+          return new layer.constructor(Object.assign({}, layer.props, {
+            opacity: opacity,
+            pointSize: layer.props.pointSize
+          }));
+        });
+        overlay.setProps({ layers: layers });
+        sliderOpactiyValue.textContent = e.target.value + '%';
       });
 
-      map.addLayer(tile3dLayer);
-      */
+      // スライダーで3次元点群データのポイントサイズを制御
+      const sliderPointSize = document.getElementById('slider-pointSize');
+      const sliderPointSizeValue = document.getElementById('slider-pointSize-value');
+
+      // ポイントサイズを変更するための関数
+      sliderPointSize.addEventListener('input', function (e) {
+        const pointSize = parseFloat(e.target.value);
+        layers = layers.map(layer => {
+          return new layer.constructor(Object.assign({}, layer.props, {
+            pointSize: pointSize,
+            opacity: layer.props.opacity
+          }));
+        });
+        overlay.setProps({ layers: layers });
+        sliderPointSizeValue.textContent = e.target.value;
+      });
+
     })
   </script>
 </body>
