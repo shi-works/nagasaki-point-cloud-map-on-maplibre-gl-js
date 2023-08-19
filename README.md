@@ -6,7 +6,7 @@ https://shi-works.github.io/nagasaki-point-cloud-map-on-maplibre-gl-js/
 - [pdal 2.5.2](https://pdal.io/en/latest/)
 - [py3dtiles 6.0.0](https://pypi.org/project/py3dtiles/)
 ```
-# OSGeo4Wを起動
+# OSGeo4W Shellを起動
 # PDALとJSONを利用して複数ファイルをマージ
 pdal pipeline merge-pipeline.json
 
