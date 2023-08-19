@@ -90,11 +90,23 @@
         interleaved: true,
         layers: [
           new deck.Tile3DLayer({
-            id: "tile3dlayer",
+            id: "tile3dlayer-1",
             pointSize: 2,
             // 長崎県 3次元点群データ
-            // data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/nagasaki_station/tileset.json',    // 長崎駅
-            // data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/sasebo_station/tileset.json',      // 佐世保駅
+            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/nagasaki_station/tileset.json',    // 長崎駅
+            loader: Tiles3DLoader
+          }),
+          new deck.Tile3DLayer({
+            id: "tile3dlayer-2",
+            pointSize: 2,
+            // 長崎県 3次元点群データ
+            data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/sasebo_station/tileset.json',      // 佐世保駅
+            loader: Tiles3DLoader
+          }),
+          new deck.Tile3DLayer({
+            id: "tile3dlayer-3",
+            pointSize: 2,
+            // 長崎県 3次元点群データ
             data: 'https://xs489works.xsrv.jp/3dtiles/open_nagasaki/huistenbosch/tileset.json',      // ハウステンボス
             loader: Tiles3DLoader
           })
