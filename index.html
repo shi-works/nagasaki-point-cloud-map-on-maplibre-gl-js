@@ -4,8 +4,9 @@
   <title>長崎県 3次元点群データ（3DTiles）</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
-  <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet">
+  <script src='https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js'></script>
+  <link href='https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css' rel='stylesheet' />
+  <script src="https://unpkg.com/pmtiles@2.10.0/dist/index.js"></script>
   <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script>
   <script src="https://unpkg.com/@loaders.gl/3d-tiles@^2.3.0/dist/dist.min.js"></script>
   <style>
@@ -24,7 +25,7 @@
     .map-overlay {
       font: bold 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
       position: absolute;
-      width: 220px;
+      width: 180px;
       bottom: 20px;
       left: 0;
       padding: 10px;
@@ -70,14 +71,20 @@
     </div>
   </div>
   <script type="text/javascript">
+    // addProtocolの設定
+    let protocol = new pmtiles.Protocol();
+    maplibregl.addProtocol("pmtiles", protocol.tile);
+
+    // マップの初期化
     const map = new maplibregl.Map({
       container: 'map',
       style: 'std.json',
       hash: true,
-      zoom: 16.65,
-      center: [129.790141, 33.085061],
-      pitch: 60,
-      bearing: 0,
+      zoom: 16.75,
+      center: [129.867164, 32.750944],
+      pitch: 69,
+      maxPitch: 85,
+      bearing: 29.7,
       attributionControl: false,
     })
 
@@ -106,7 +113,7 @@
     // Attributionを折りたたみ表示
     map.addControl(new maplibregl.AttributionControl({
       compact: true,
-      customAttribution: '<a href="https://twitter.com/shi__works" target="_blank">Twitter</a> | <a href="https://github.com/shi-works/nagasaki-point-cloud-map-on-maplibre-gl-js" target="_blank">Github</a> | <a href="https://opennagasaki.nerc.or.jp/" target="_blank">©オープンナガサキ</a> '
+      customAttribution: '<a href="https://twitter.com/shi__works" target="_blank">Twitter</a> | <a href="https://github.com/shi-works/nagasaki-point-cloud-map-on-maplibre-gl-js" target="_blank">Github</a> | <a href="https://opennagasaki.nerc.or.jp/" target="_blank">オープンナガサキ</a> '
     }));
 
     map.on('load', () => {
